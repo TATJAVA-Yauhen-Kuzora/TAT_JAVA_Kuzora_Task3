@@ -30,6 +30,7 @@ public class Server {
 						if ((requestId != null) & (requests.get(requestId) != null)) {
 							requestId = requestIds.poll();
 							ClientListener clientListener = connections.get(userIps.get(requestId));
+							userIps.remove(requestId);
 							String request = requests.get(requestId);
 							requests.remove(requestId);
 							clientListener.addRequest(request);
@@ -55,10 +56,9 @@ public class Server {
 	}
 
 	public String takeRequest(Integer userIp, String request) {
-		Integer requestId = gashFuck(userIp);
+		Integer requestId = getUniqueRequestId(userIp);
 		try {
 			synchronized (connections) {
-
 				if (connections.containsKey(userIp)) {
 					requests.put(requestId, request);
 					requestIds.add(requestId);
@@ -71,30 +71,29 @@ public class Server {
 					userIps.put(requestId, userIp);
 				}
 			}
-
 		} catch (Exception e) {
 		}
 		return sendResponse(requestId);
 	}
 
-	private synchronized String sendResponse(int userIp) {
+	private synchronized String sendResponse(int requestId) {
 		Future<String> response = null;
 		String ret = "";
 		while (response == null) {
-			response = responses.get(userIp);
+			response = responses.get(requestId);
 		}
 		while (!response.isDone()) {
 		}
 		try {
 			ret = response.get();
-			responses.remove(userIp);
+			responses.remove(requestId);
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return ret;
 	}
 
-	private synchronized Integer gashFuck(int userIp) {
+	private synchronized Integer getUniqueRequestId(int userIp) {
 		Date date = new Date();
 		Integer ret = (userIp * (int) date.getTime() * (int) (Math.random() * 1000));
 		// System.out.println(userIp + " " + ret);
