@@ -49,8 +49,7 @@ public class Server {
 							Future<String> future = pool.submit(clientListener);
 							responses.put(requestId, future);
 						}
-					} catch (Exception e) {
-						// TODO: handle exception
+					} catch (NullPointerException e) {
 					}
 				}
 			}
@@ -111,8 +110,7 @@ public class Server {
 	private synchronized Integer gashFuck(int userIp) {
 		Date date = new Date();
 		Integer ret = (userIp * (int) date.getTime() * (int) (Math.random() * 1000));
-
-		System.out.println(userIp + "  " + ret);
+//		System.out.println(userIp + "  " + ret);
 		return ret;
 	}
 }
