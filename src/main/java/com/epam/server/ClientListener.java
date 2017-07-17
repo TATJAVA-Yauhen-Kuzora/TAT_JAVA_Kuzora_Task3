@@ -1,16 +1,9 @@
-/**
- * 
- */
 package com.epam.server;
 
 import java.util.concurrent.Callable;
 import com.epam.library.command.exception.CommandException;
 import com.epam.library.guicontroller.Controller;
 
-/**
- * @author Eugene13
- *
- */
 public class ClientListener implements Callable<String> {
 	private String request = null;
 	private Controller controller;

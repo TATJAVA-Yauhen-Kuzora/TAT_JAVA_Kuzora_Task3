@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.epam.server;
 
 import java.util.Date;
@@ -11,25 +8,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-/**
- * @author Eugene13
- *
- */
 public class Server {
 	private int port;
 	private Thread serverRun;
 	private boolean flagServerRunning = false;
-	// Место хранение подключений
 	private ConcurrentHashMap<Integer, ClientListener> connections = new ConcurrentHashMap<>();
-	// Map of requests
 	private ConcurrentHashMap<Integer, String> requests = new ConcurrentHashMap<>();
-	// Map of responses
 	private ConcurrentHashMap<Integer, Future<String>> responses = new ConcurrentHashMap<>();
-	// Queue of ip
 	private ConcurrentLinkedQueue<Integer> requestIds = new ConcurrentLinkedQueue<Integer>();
-
 	private ConcurrentHashMap<Integer, Integer> userIps = new ConcurrentHashMap<>();
-	// Thread pool
 	private ExecutorService pool = Executors.newCachedThreadPool();
 
 	public Server(int port) {
@@ -110,7 +97,7 @@ public class Server {
 	private synchronized Integer gashFuck(int userIp) {
 		Date date = new Date();
 		Integer ret = (userIp * (int) date.getTime() * (int) (Math.random() * 1000));
-//		System.out.println(userIp + "  " + ret);
+		// System.out.println(userIp + " " + ret);
 		return ret;
 	}
 }
