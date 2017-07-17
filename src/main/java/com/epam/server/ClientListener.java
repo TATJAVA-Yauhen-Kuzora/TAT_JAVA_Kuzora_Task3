@@ -26,7 +26,7 @@ public class ClientListener implements Callable<String> {
 		return "Where is your command?";
 	}
 
-	public void addRequest(String request) {
+	public synchronized void addRequest(String request) {
 		this.request = request;
 	}
 }
