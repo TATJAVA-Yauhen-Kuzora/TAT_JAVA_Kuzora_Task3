@@ -4,9 +4,7 @@ import org.testng.annotations.Test;
 import com.epam.server.Server;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 
 /**
  * Test Class {@link ServerTest}.
@@ -16,13 +14,13 @@ import org.testng.annotations.BeforeSuite;
 public class ServerTest {
 	private Server server;
 
-	@BeforeSuite
+	@BeforeClass
 	public void beforeClass() {
 		server = new Server(1);
 		server.serverStart();
 	}
 
-	@AfterSuite
+	@AfterClass
 	public void afterClass() {
 		server.serverStop();
 		server = null;
@@ -42,7 +40,7 @@ public class ServerTest {
 	 */
 	@Test(groups = {
 			"parallelRequests" }, dataProvider = "parallelRequests", dataProviderClass = DataProviderServerTest.class)
-	public void tst_multiThreadingTest(Integer userIp, String request) {
+	public void tst_multiThreadingRequestsTest(Integer userIp, String request) {
 		System.out.println(userIp + "____" + server.takeRequest(userIp, request));
 	}
 

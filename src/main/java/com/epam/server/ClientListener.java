@@ -4,11 +4,35 @@ import java.util.concurrent.Callable;
 import com.epam.library.command.exception.CommandException;
 import com.epam.library.guicontroller.Controller;
 
+/**
+ * Class {@link ClientListener}.
+ * <P>
+ * Class ClientListener implements {@link Callable} for realization multithreading
+ * logic.
+ * <P>
+ * <i>This Class is a member of the {@link com.epam.server} package.</i>
+ */
 public class ClientListener implements Callable<String> {
+	/**
+	 * Current user request in each Thread.
+	 */
 	private String request = null;
+	/**
+	 * For synchronizing work with one user (same user id, many request from
+	 * it).
+	 */
 	private volatile boolean requestExecuteFlag = true;
+	/**
+	 * Each unique user will get his controller, with possibility to save
+	 * session.
+	 */
 	private Controller controller;
 
+	/**
+	 * Method call.
+	 * 
+	 * @return String object as response on user request
+	 */
 	@Override
 	public String call() {
 		if (controller == null) {
@@ -29,11 +53,19 @@ public class ClientListener implements Callable<String> {
 		return "This String will never be sent to user. Just hot fix.";
 	}
 
-	public String addRequest(String request) {
+	/**
+	 * Method addRequest.
+	 * 
+	 * Synchronized method using simple {@link #requestExecuteFlag} boolean
+	 * field.
+	 * 
+	 * @param request
+	 *            String line with command
+	 */
+	public void addRequest(String request) {
 		while (!requestExecuteFlag) {
 		}
 		this.request = request;
 		requestExecuteFlag = false;
-		return request;
 	}
 }
