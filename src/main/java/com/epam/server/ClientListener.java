@@ -26,7 +26,7 @@ public class ClientListener implements Callable<String> {
 				return e.getMessage();
 			}
 		}
-		return "Where is your command?";
+		return "This String will never be sent to user. Just hot fix.";
 	}
 
 	public String addRequest(String request) {

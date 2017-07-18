@@ -24,24 +24,20 @@ public class Server {
 		serverRun = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (flagServerRunning) {
+				while (flagServerRunning || !requests.isEmpty()) {
 					Integer requestId = requestIds.peek();
 					try {
 						if ((requestId != null) & (requests.get(requestId) != null)) {
 							requestId = requestIds.poll();
 							ClientListener clientListener = connections.get(userIps.get(requestId));
-//							synchronized (clientListener) {
-								Future<String> future;
-//								userIps.remove(requestId);
-								String request = requests.get(requestId);
-								System.out.println(
-										"удалено из requests(" + requestId + " "+userIps.get(requestId)+"): " + requests.remove(requestId));
-								System.out.println("добавлено в listener(" + requestId + " "+userIps.get(requestId)+"): "
-										+ clientListener.addRequest(request));
-								userIps.remove(requestId);
-								future = pool.submit(clientListener);
-								responses.put(requestId, future);
-//							}
+							String request = requests.get(requestId);
+							System.out.println("удалено из requests(" + requestId + " " + userIps.get(requestId) + "): "
+									+ requests.remove(requestId));
+							System.out.println("добавлено в listener(" + requestId + " " + userIps.get(requestId)
+									+ "): " + clientListener.addRequest(request));
+							userIps.remove(requestId);
+							Future<String> future = pool.submit(clientListener);
+							responses.put(requestId, future);
 						}
 					} catch (NullPointerException e) {
 					}
@@ -82,7 +78,7 @@ public class Server {
 		return sendResponse(requestId);
 	}
 
-	private synchronized String sendResponse(int requestId) {
+	private String sendResponse(int requestId) {
 		Future<String> response = null;
 		String ret = "";
 		while (response == null) {
@@ -99,10 +95,9 @@ public class Server {
 		return ret;
 	}
 
-	private synchronized Integer getUniqueRequestId(int userIp) {
+	private Integer getUniqueRequestId(int userIp) {
 		Date date = new Date();
 		Integer ret = (userIp * (int) date.getTime() * (int) (Math.random() * 1000));
-		// System.out.println(userIp + " " + ret);
 		return ret;
 	}
 }
