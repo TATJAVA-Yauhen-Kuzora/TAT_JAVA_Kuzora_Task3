@@ -7,8 +7,8 @@ import com.epam.library.guicontroller.Controller;
 /**
  * Class {@link ClientListener}.
  * <P>
- * Class ClientListener implements {@link Callable} for realization multithreading
- * logic.
+ * Class ClientListener implements {@link Callable} for realization
+ * multithreading logic.
  * <P>
  * <i>This Class is a member of the {@link com.epam.server} package.</i>
  */
@@ -62,7 +62,7 @@ public class ClientListener implements Callable<String> {
 	 * @param request
 	 *            String line with command
 	 */
-	public void addRequest(String request) {
+	public synchronized void addRequest(String request) {
 		while (!requestExecuteFlag) {
 		}
 		this.request = request;
