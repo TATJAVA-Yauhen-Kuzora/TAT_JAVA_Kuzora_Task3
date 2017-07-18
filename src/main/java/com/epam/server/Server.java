@@ -30,12 +30,18 @@ public class Server {
 						if ((requestId != null) & (requests.get(requestId) != null)) {
 							requestId = requestIds.poll();
 							ClientListener clientListener = connections.get(userIps.get(requestId));
-							userIps.remove(requestId);
-							String request = requests.get(requestId);
-							requests.remove(requestId);
-							clientListener.addRequest(request);
-							Future<String> future = pool.submit(clientListener);
-							responses.put(requestId, future);
+//							synchronized (clientListener) {
+								Future<String> future;
+//								userIps.remove(requestId);
+								String request = requests.get(requestId);
+								System.out.println(
+										"удалено из requests(" + requestId + " "+userIps.get(requestId)+"): " + requests.remove(requestId));
+								System.out.println("добавлено в listener(" + requestId + " "+userIps.get(requestId)+"): "
+										+ clientListener.addRequest(request));
+								userIps.remove(requestId);
+								future = pool.submit(clientListener);
+								responses.put(requestId, future);
+//							}
 						}
 					} catch (NullPointerException e) {
 					}
@@ -85,7 +91,7 @@ public class Server {
 		while (!response.isDone()) {
 		}
 		try {
-			ret = response.get();
+			ret = requestId + " " + response.get();
 			responses.remove(requestId);
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();

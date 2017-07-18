@@ -6,6 +6,7 @@ import com.epam.library.guicontroller.Controller;
 
 public class ClientListener implements Callable<String> {
 	private String request = null;
+	private volatile boolean requestExecuteFlag = true;
 	private Controller controller;
 
 	@Override
@@ -17,16 +18,22 @@ public class ClientListener implements Callable<String> {
 			try {
 				String response = controller.executeTask(request).toString();
 				request = null;
+				requestExecuteFlag = true;
 				return response;
 			} catch (CommandException e) {
 				request = null;
+				requestExecuteFlag = true;
 				return e.getMessage();
 			}
 		}
 		return "Where is your command?";
 	}
 
-	public synchronized void addRequest(String request) {
+	public String addRequest(String request) {
+		while (!requestExecuteFlag) {
+		}
 		this.request = request;
+		requestExecuteFlag = false;
+		return request;
 	}
 }

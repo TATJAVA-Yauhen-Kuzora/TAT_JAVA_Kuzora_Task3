@@ -22,6 +22,6 @@ public class ServerTest {
 
 	@Test(dataProvider = "positiveLogin", dataProviderClass = DataProviderServerTest.class)
 	public void f(Integer userIp, String request) {
-		System.out.println(userIp + " " + server.takeRequest(userIp, request));
+		System.out.println(userIp + "____" + server.takeRequest(userIp, request));
 	}
 }
