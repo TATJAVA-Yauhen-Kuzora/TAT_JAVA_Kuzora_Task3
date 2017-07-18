@@ -1,24 +1,31 @@
-package com.epam.library.server;
+package com.epam.server;
 
 import org.testng.annotations.Test;
-
 import com.epam.server.Server;
-
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
+/**
+ * Test Class {@link ServerTest}.
+ * <P>
+ * Test Class ServerTest is for testing multithreading requets to server.
+ */
 public class ServerTest {
-	private Server server = new Server(1);
+	private Server server;
 
-	@BeforeClass
-	public void beforeMethod() {
+	@BeforeSuite
+	public void beforeClass() {
+		server = new Server(1);
 		server.serverStart();
 	}
 
-	@AfterClass
-	public void afterMethod() {
+	@AfterSuite
+	public void afterClass() {
 		server.serverStop();
+		server = null;
 	}
 
 	/**
@@ -33,8 +40,9 @@ public class ServerTest {
 	 * @param request
 	 *            Strnog line with command and parameters
 	 */
-	@Test(dataProvider = "parallelRequests", dataProviderClass = DataProviderServerTest.class)
-	public void multiThreadingTest(Integer userIp, String request) {
+	@Test(groups = {
+			"parallelRequests" }, dataProvider = "parallelRequests", dataProviderClass = DataProviderServerTest.class)
+	public void tst_multiThreadingTest(Integer userIp, String request) {
 		System.out.println(userIp + "____" + server.takeRequest(userIp, request));
 	}
 
@@ -50,10 +58,9 @@ public class ServerTest {
 	 * @param expected
 	 *            Strnog line as expected result of executing
 	 */
-	@Test(dataProvider = "sequentialRequests", dataProviderClass = DataProviderServerTest.class)
-	public void sequentialRequestsTest(String expected, Integer userIp, String request) {
-		// System.out.println(userIp + "____" + server.takeRequest(userIp,
-		// request));
+	@Test(groups = {
+			"sequentialRequests" }, dataProvider = "sequentialRequests", dataProviderClass = DataProviderServerTest.class)
+	public void tst_sequentialRequestsTest(String expected, Integer userIp, String request) {
 		Assert.assertEquals(server.takeRequest(userIp, request), expected);
 	}
 }

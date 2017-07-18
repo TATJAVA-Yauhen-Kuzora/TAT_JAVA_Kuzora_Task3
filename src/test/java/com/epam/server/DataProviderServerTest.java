@@ -1,4 +1,4 @@
-package com.epam.library.server;
+package com.epam.server;
 
 import org.testng.annotations.DataProvider;
 
@@ -7,7 +7,7 @@ public class DataProviderServerTest {
 	 * Dataprovider parallelRequests.
 	 * 
 	 * @return Object[][] with parallel requests from different user ip and also
-	 *         parallel requests from one use ip
+	 *         parallel requests from one user ip
 	 */
 	@DataProvider(parallel = true)
 	public Object[][] parallelRequests() { //
@@ -23,10 +23,10 @@ public class DataProviderServerTest {
 	}
 
 	/**
-	 * Dataprovider parallelRequests.
+	 * Dataprovider sequentialRequests.
 	 * 
-	 * @return Object[][] with parallel requests from different user ip and also
-	 *         parallel requests from one use ip
+	 * @return Object[][] with sequential requests from different user ip and
+	 *         also sequential requests from one user ip
 	 */
 	@DataProvider(parallel = false)
 	public Object[][] sequentialRequests() { //
