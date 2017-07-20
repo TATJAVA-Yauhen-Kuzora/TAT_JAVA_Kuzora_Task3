@@ -65,8 +65,9 @@ public class Server {
 		serverRun = new Thread(new Runnable() {
 			@Override
 			public void run() {
+				Integer requestId;
 				while (flagServerRunning || !requests.isEmpty()) {
-					Integer requestId = requestIds.peek();
+					requestId = requestIds.peek();
 					try {
 						if ((requestId != null) & (requests.get(requestId) != null)) {
 							requestId = requestIds.poll();
