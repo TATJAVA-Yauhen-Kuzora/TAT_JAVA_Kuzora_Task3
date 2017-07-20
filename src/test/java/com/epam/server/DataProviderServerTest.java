@@ -40,13 +40,12 @@ public class DataProviderServerTest {
 						+ "delavega    delavega    /  delavega1   /  Banned    , "
 						+ "Ivan        Baranov     /  LOH         /  Banned    , "
 						+ "super1      super1      /  super1      /  User      , "
-						+ "name        secondName  /  testLogin   /  User      , "
 						+ "Java        Bolik       /  PIZDECLOGIN  /  Admin     , "
 						+ "Eugene      Kuzora      /  super       /  SuperAdmin]", 301, "View_all_users" }, //
-				new Object[] { "[Java For Testers  /  Alan Richardson  /  Availiable, "
+				new Object[] { "[Head First Java  /  Kathy Sierra  /  Availiable, "
+						+ "Java For Testers  /  Alan Richardson  /  Availiable, "
 						+ "SpeakOut  /  Steve Oakes  /  Availiable, "
-						+ "SpeakOut2  /  Steve Oukes and CO  /  Availiable, "
-						+ "Head First Java  /  Kathy Sierra  /  Not availiable]", 305, "View_all_books" }, //
+						+ "SpeakOut2  /  Steve Oukes and CO  /  Availiable]", 305, "View_all_books" }, //
 				new Object[] { "Accaunt has been banned.", 306, "Login|delavega1|12345" }, //
 				new Object[] { "Illegal command for current user.", 306,
 						"Update_user_info|Eugene|Kuzora|superProgger|4|12345" }, //
