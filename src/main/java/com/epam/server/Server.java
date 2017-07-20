@@ -125,19 +125,16 @@ public class Server {
 	 */
 	public String takeRequest(Integer userIp, String request) {
 		Integer requestId = getUniqueRequestId(userIp);
-		try {
-			if (connections.containsKey(userIp)) {
-				requests.put(requestId, request);
-				requestIds.add(requestId);
-				userIps.put(requestId, userIp);
-			} else {
-				ClientListener clientListener = new ClientListener();
-				connections.put(userIp, clientListener);
-				requests.put(requestId, request);
-				requestIds.add(requestId);
-				userIps.put(requestId, userIp);
-			}
-		} catch (Exception e) {
+		if (connections.containsKey(userIp)) {
+			requests.put(requestId, request);
+			requestIds.add(requestId);
+			userIps.put(requestId, userIp);
+		} else {
+			ClientListener clientListener = new ClientListener();
+			connections.put(userIp, clientListener);
+			requests.put(requestId, request);
+			requestIds.add(requestId);
+			userIps.put(requestId, userIp);
 		}
 		return sendResponse(requestId);
 	}
@@ -165,7 +162,7 @@ public class Server {
 			ret = response.get();
 			responses.remove(requestId);
 		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
+			return e.getMessage();
 		}
 		return ret;
 	}
