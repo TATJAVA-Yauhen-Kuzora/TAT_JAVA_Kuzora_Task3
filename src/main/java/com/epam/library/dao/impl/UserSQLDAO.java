@@ -182,8 +182,6 @@ public class UserSQLDAO implements UserDAO {
 
 	/**
 	 * Implementation of banUser method.
-	 * 
-	 * @return
 	 */
 	@Override
 	public synchronized boolean banUser(int UserId) throws DAOException {
@@ -205,8 +203,6 @@ public class UserSQLDAO implements UserDAO {
 
 	/**
 	 * Implementation of unBanUser method.
-	 * 
-	 * @return
 	 */
 	@Override
 	public synchronized boolean unBanUser(int UserId) throws DAOException {
@@ -228,8 +224,6 @@ public class UserSQLDAO implements UserDAO {
 
 	/**
 	 * Implementation of giveAdminForUser method.
-	 * 
-	 * @return
 	 */
 	@Override
 	public synchronized boolean giveAdminForUser(int UserId) throws DAOException {

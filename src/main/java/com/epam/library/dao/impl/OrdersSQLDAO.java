@@ -102,8 +102,6 @@ public class OrdersSQLDAO implements OrdersDAO {
 
 	/**
 	 * Implementation of addOrder method.
-	 * 
-	 * @return
 	 */
 	@Override
 	public synchronized boolean addOrder(int userId, int bookId) throws DAOException {
@@ -127,8 +125,6 @@ public class OrdersSQLDAO implements OrdersDAO {
 
 	/**
 	 * Implementation of confirmOrder method.
-	 * 
-	 * @return
 	 */
 	@Override
 	public synchronized boolean confirmOrder(int orderId) throws DAOException {
@@ -150,8 +146,6 @@ public class OrdersSQLDAO implements OrdersDAO {
 
 	/**
 	 * Implementation of confirmReturn method.
-	 * 
-	 * @return
 	 */
 	@Override
 	public synchronized boolean confirmReturn(int orderId) throws DAOException {

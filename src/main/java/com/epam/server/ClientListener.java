@@ -31,7 +31,7 @@ public class ClientListener implements Callable<String> {
 	/**
 	 * Method call.
 	 * 
-	 * @return Future<String> object as response on user request
+	 * @return Future<{@link String}> object as response on user request
 	 */
 	@Override
 	public String call() {
